@@ -1,0 +1,24 @@
+-extends "template.haml"
+-import "widgets.haml" as widgets
+-block section
+  event
+-block page
+  ideas
+-block title
+  #{__('common.nav.ideas')}
+-block content
+  -if can_edit
+    %form(class="create" method="post" action="#{route('idea.store', {'batch': batch, 'event': event})}")
+      #{csrf_field()}
+      %input(type="text" name="idea" value="" placeholder="#{__('ideas.placeholder')}" onkeydown="if(event.keyCode == 13) return false;" required)
+      %div(class="buttons")
+        -for type in types
+          %button(type="submit" name="type" value="#{type}" class="type-#{type}") #{__('common.type.'~type)}
+
+  -if event.Ideas|length == 0 and not can_edit
+    %section.empty
+      %p There's nothing here yet. :(
+  - else
+    %section.ideas
+      -for idea in event.Ideas
+        #{widgets.idea(can_edit, batch, event, idea)}

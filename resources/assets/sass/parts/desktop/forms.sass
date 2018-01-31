@@ -1,0 +1,31 @@
+form
+  input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="file"], textarea
+    display: block
+    width: 100%
+    max-width: 30rem
+    margin-bottom: 1rem
+
+    @extend %rounded
+    padding: 0.5rem 1rem
+    border: 1px solid $color-gray-light
+    +prefixer(transition, border 500ms ease, webkit moz spec)
+    +placeholder
+      color: $color-gray
+      opacity: 1 !important
+
+    &[readonly]
+      background-color: $color-gray-lightest
+      cursor: pointer
+
+    &:focus
+      border-color: $color-gray
+
+  label
+    display: block
+    font-size: +modular-scale(-1)
+
+  button, input[type="reset"], input[type="submit"]
+    @extend %button-featured
+
+  input[type="submit"], button[type="submit"]
+    @extend %button-cta

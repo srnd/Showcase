@@ -1,0 +1,52 @@
+-macro idea(can_edit, batch, event, idea)
+  %article(class="widget-idea type-#{idea.Type} #{can_edit ? 'edit' : 'static'}" id="idea-#{idea.Id}")
+    -if can_edit
+      %form(class="delete" method="post" action="#{route('idea.destroy', {'batch': batch, 'event': event, 'idea': idea})}")
+        #{csrf_field()}
+        #{method_field('DELETE')}
+        %button(type="submit") #{__('common.delete')}
+      %form(class="update" method="post" action="#{route('idea.update', {'batch': batch, 'event': event, 'idea': idea})}")
+        #{csrf_field()}
+        #{method_field('PUT')}
+        %textarea(name="idea" required)="#{idea.Idea}"
+        %button(type="submit") #{__('common.save')}
+    -else
+      %p #{idea.Idea}
+
+-macro team(can_edit, batch, event, team)
+  %article(class="widget-team")
+    -if can_edit
+      -if team
+        %form(class="delete" method="post" action="#{route('team.destroy', {'batch': batch, 'event': event, 'team': team})}")
+          #{csrf_field()}
+          #{method_field('DELETE')}
+          %button(type="submit") #{__('common.delete')}
+      %section.photo
+        %a(href="#" onClick="this.parentNode.parentNode.querySelector('input[type=\\'file\\']').click()")
+          .img(style="background-image: url(#{team.PhotoUrlMedium ? team.PhotoUrlMedium : '/assets/img/team-photo-missing.png'})")
+      %section.info
+        %form(class="update" method="post" enctype="multipart/form-data" action="#{route('team.'~(team ? 'update' : 'store'), {'batch': batch, 'event': event, 'team': team})}")
+          #{csrf_field()}
+          #{method_field(team ? 'PUT' : 'POST')}
+          %input(type="file" name="photo" onChange="var pic = this.parentNode.parentNode.parentNode.querySelector('.img');var reader = new FileReader();reader.addEventListener('load', function(){pic.style.setProperty('background-image', 'url('+reader.result+')');});reader.readAsDataURL(this.files[0]);")
+
+          %input(class="name" type="text" name="name" value="#{team.Name}" placeholder="#{__('teams.name.placeholder')}")
+          %textarea(class="description" name="description" placeholder="#{__('teams.description.placeholder')}")="#{team.Description}"
+          %button(type="submit") #{__('common.'~(team ? 'save' : 'create'))}
+    -else
+      %section.photo
+        %a(href="#{team.PhotoUrl}" target="_blank")
+          .img(style="background-image: url(#{team.PhotoUrlMedium ? team.PhotoUrlMedium : '/assets/img/team-photo-missing.png'})")
+      %section.info
+        %h2.name #{team.Name}
+        %p.description #{team.Description}
+
+-macro photo(can_edit, batch, event, photo)
+  %a(href="#{photo.Url}" target="_blank" class="widget-photo")
+    %img(src="#{photo.UrlMedium}")
+    -if can_edit
+      %form(class="delete" method="post" action="#{route('photo.destroy', {'batch': batch, 'event': event, 'photo': photo})}")
+        #{csrf_field()}
+        #{method_field('DELETE')}
+        %button(type="submit") #{__('common.delete')}
+      

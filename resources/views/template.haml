@@ -1,0 +1,74 @@
+!!! 5
+%html
+  %head
+    -if block('title')
+      %title #{block('title')|trim} ~ #{__('common.site.title')}
+    -else
+      %title #{__('common.site.title')}
+
+    %link(rel="stylesheet" href="/assets/css/style.css")
+
+  %body(class="section-#{block('section')|trim} page-#{block('page')|trim}")
+
+    -if session('error')
+      #message.message.error
+        #{session('error')}
+    -elseif session('success')
+      #message.message.success
+        #{session('success')}
+
+    %header
+      %h1
+        %a(href="#{route('index')}") #{__('common.site.title')}
+      %nav
+        %ul
+          -if event
+            %li(class="#{block('page')|trim == 'photos' ? 'active' : ''}")
+              %a(href="#{route('event.photos', {'batch': event.batch, 'event': event})}") #{__('common.nav.photos')}
+            -if event.IsInProgress
+              %li(class="#{block('page')|trim == 'ideas' ? 'active' : ''}")
+                %a(href="#{route('event.ideas', {'batch': event.batch, 'event': event})}") #{__('common.nav.ideas')}
+            %li(class="#{block('page')|trim == 'teams' ? 'active' : ''}")
+              %a(href="#{route('event.teams', {'batch': event.batch, 'event': event})}") #{__('common.nav.teams')}
+            -if event.IsInProgress
+              %li(class="#{block('page')|trim == 'presentations' ? 'active' : ''}")
+                %a(href="#{route('event.presentations', {'batch': event.batch, 'event': event})}") #{__('common.nav.presentations')}
+
+    .content
+      -block header
+        &nbsp;
+
+      -if errors.any()
+        .error-message
+          %h3 #{__('common.error.title')}
+          %ul
+            -for error in errors.all()
+              %li #{error}
+
+      -block content
+        #{__('common.error.nocontent')}
+
+    %footer
+      .info
+        &copy; srnd.org.
+      .legal
+        %ul
+          %li
+            %a(href="https://srnd.org/trademarks") #{__('common.nav.trademarks')}
+          %li
+            %a(href="https://srnd.org/conduct") #{__('common.nav.conduct')}
+      .links
+        %ul
+          -if username
+            %li
+              %a(href="#{route('auth.logout')}") #{__('common.nav.logout')}
+          -else
+            %li
+              %a(href="#{route('auth.login')}") #{__('common.nav.login')}
+    -if session('success') or session('error')
+      :javascript
+        setTimeout(function() {
+          var message = document.getElementById('message');
+          message.style.height = 0;
+          message.style.padding = 0
+        }, 5000);

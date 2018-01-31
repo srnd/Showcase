@@ -1,0 +1,58 @@
+body.section-event.page-ideas
+  form.create
+    +grid-column(8)
+    +grid-push(2)
+    @extend %featured
+    margin-bottom: 2rem
+    input[type="text"]
+      width: 100%
+      max-width: 100%
+      margin-bottom: 0
+      +prefixer(border-bottom-left-radius, 0, moz webkit spec)
+      +prefixer(border-bottom-right-radius, 0, moz webkit spec)
+    .buttons
+      font-size: 0
+      button
+        width: 20%
+        +prefixer(border-radius, 0, moz webkit spec)
+        &:first-child
+          +prefixer(border-bottom-left-radius, 2px, moz webkit spec)
+        &:last-child
+          +prefixer(border-bottom-right-radius, 2px, moz webkit spec)
+        &:hover
+          box-shadow: none
+        &.type-app
+          color: $color-type-app-contrast
+          background-color: $color-type-app
+          border-color: $color-type-app
+          &:hover
+            background-color: lighten($color-type-app, 10%)
+            border-color: lighten($color-type-app, 10%)
+        &.type-game
+          color: $color-type-game-contrast
+          background-color: $color-type-game
+          border-color: $color-type-game
+          &:hover
+            background-color: lighten($color-type-game, 10%)
+            border-color: lighten($color-type-game, 10%)
+        &.type-site
+          color: $color-type-site-contrast
+          background-color: $color-type-site
+          border-color: $color-type-site
+          &:hover
+            background-color: lighten($color-type-site, 10%)
+            border-color: lighten($color-type-site, 10%)
+        &.type-hardware
+          color: $color-type-hardware-contrast
+          background-color: $color-type-hardware
+          border-color: $color-type-hardware
+          &:hover
+            background-color: lighten($color-type-hardware, 10%)
+            border-color: lighten($color-type-hardware, 10%)
+        &.type-other
+          color: $color-type-other-contrast
+          background-color: $color-type-other
+          border-color: $color-type-other
+          &:hover
+            background-color: lighten($color-type-other, 10%)
+            border-color: lighten($color-type-other, 10%)

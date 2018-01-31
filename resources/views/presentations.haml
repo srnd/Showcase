@@ -1,0 +1,72 @@
+-extends "template.haml"
+-import "widgets.haml" as widgets
+-block section
+  event
+-block page
+  presentations
+-block title
+  #{__('common.nav.presentations')}
+-block content
+  -if event.Teams|length == 0
+    %section.empty
+      %p There's nothing here yet. :(
+  -else
+    %section.teams
+      %section.presenting
+        %h3 #{__('presentations.presenting')}
+        -if event.PresentingTeams|length == 0
+          %p No one is presenting yet.
+        -else
+          %ul(class="teams #{can_edit ? 'editable' : ''}")
+            -for team in event.PresentingTeams
+              %li(id="#{team.Id}")
+                %span.name #{team.Name}
+                -if can_edit
+                  %form(method="post" action="#{route('team.update', {'batch': batch, 'event': event, 'team': team})}")
+                    #{csrf_field()}
+                    #{method_field('PUT')}
+                    %input(type="hidden" name="is_presenting" value="0")
+                    %input(type="submit" value="#{__('presentations.mark-not-presenting')}")
+
+          -if can_edit
+            %form(method="post" action="#{route('event.presentations.shuffle', {'batch': batch, 'event': event})}")
+              #{csrf_field()}
+              %input(type="submit" value="#{__('presentations.shuffle')}")
+
+      -if event.NonPresentingTeams|length > 0
+        %section.non-presenting
+          %h3 #{__('presentations.non-presenting')}
+          %ul.teams
+            -for team in event.NonPresentingTeams
+              %li(id="#{team.Id}")
+                %span.name #{team.Name}
+                -if can_edit
+                  %form(method="post" action="#{route('team.update', {'batch': batch, 'event': event, 'team': team})}")
+                    #{csrf_field()}
+                    #{method_field('PUT')}
+                    %input(type="hidden" name="is_presenting" value="1")
+                    %input(type="submit" value="#{__('presentations.mark-presenting')}")
+
+    %section.info
+      -if event.PresentingTeams|length > 0
+        %section.length
+          .title #{__('presentations.length.title')}
+          .time #{__('presentations.length.num', {'num': (60/(event.PresentingTeams|length))|round(0, 'floor')})}
+          .less #{__('presentations.length.less')}
+
+    -if can_edit
+      %script(src="/assets/js/jquery.js")
+      %script(src="/assets/js/sortable.min.js")
+      :javascript
+        Sortable.create(document.querySelector('section.teams .presenting ul'), {
+          onUpdate: function() {
+            var orderLi = document.querySelectorAll('section.teams .presenting ul li');
+            var order = {};
+            for (var i in orderLi) {
+              if (orderLi[i].id)
+                order[orderLi[i].id] = i;
+            }
+            order['_token'] = '#{csrf_token()}';
+            $.post('#{route('event.presentations.order', {'batch': batch, 'event': event})}', order);
+          }
+        });

@@ -1,0 +1,51 @@
+body.section-event.page-presentations
+  section.teams
+    +grid-column(7)
+    +mobile
+      +grid-column(12)
+    ul.teams
+      padding: 0
+      li
+        list-style-position: inside
+        margin-bottom: 0.25rem
+        form input[type="submit"]
+          @extend %button-featured
+          background-color: $color-gray-light
+          color: $color-gray
+
+    .non-presenting ul.teams li
+      form
+        display: inline-block
+        margin-left: 1rem
+
+    .presenting ul.teams
+      li
+        list-style-type: decimal-leading-zero
+      &.editable li
+        cursor: grab
+        height: 3.5rem
+        overflow: hidden
+        @extend %featured
+
+        form
+          float: right
+          height: 3.5rem
+          margin: -1rem -1rem 0 1rem
+          input[type="submit"]
+            height: 100%
+
+  section.info
+    +grid-column(4)
+    +grid-push(1)
+    +mobile
+      +grid-column(12)
+    section.length
+      @extend %featured
+      text-align: center
+      .title
+        font-size: +modular-scale(1)
+      .time
+        font-size: +modular-scale(3)
+        font-weight: bold
+      .less
+        font-size: +modular-scale(1)

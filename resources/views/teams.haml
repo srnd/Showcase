@@ -1,0 +1,18 @@
+-extends "template.haml"
+-import "widgets.haml" as widgets
+-block section
+  event
+-block page
+  teams
+-block title
+  #{__('common.nav.teams')}
+-block content
+  -if can_edit
+    #{widgets.team(can_edit, batch, event)}
+  -if event.Teams|length == 0 and not can_edit
+    %section.empty
+      %p There's nothing here yet. :(
+  - else
+    %section.teams
+      -for team in event.Teams
+        #{widgets.team(can_edit, batch, event, team)}

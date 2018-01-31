@@ -1,0 +1,17 @@
+-extends "template.haml"
+-block section
+  index
+-block page
+  index
+-block content
+  %section.batches
+    -for batch in all_batches
+      -if batch.Events|length > 0 and not batch.IsFuture
+        %section.batch
+          %h2
+            %a.batch{"href" => batch.IsCurrent ? false : "#{route('batch', {'batch': batch})}"} #{batch.Name}
+          -if batch.IsCurrent
+            %ul
+              -for event in batch.Events
+                %li
+                  %a(href="#{route('event', {'batch': batch, 'event': event})}") #{event.Name}

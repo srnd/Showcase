@@ -1,0 +1,90 @@
+article.widget-idea
+  @extend %featured
+  +grid-column(4)
+  +mobile
+    +grid-column(12)
+  margin-bottom: 2rem
+  height: +modular-scale(2) * 6
+  overflow: hidden
+
+  &.edit
+    height: +modular-scale(2) * 9
+
+  p, textarea
+    font-size: +modular-scale(2)
+    margin: 0
+    padding: 0
+
+  textarea
+    height: +modular-scale(2) * 6
+    position: relative
+    top: -0.5rem
+    padding: 2px
+
+  button, button:hover
+    background-color: transparent
+    border-color: transparent
+
+  button:hover
+    box-shadow: none
+    background-color: $color-white
+    color: $color-black
+
+  form.delete button
+    float: right
+    margin: -0.5rem -0.5rem 0.5rem 0
+    padding: 0
+
+  form.update button
+    margin-top: -1rem
+
+  &.type-app, &.type-app textarea, &.type-app p
+    color: $color-type-app-contrast
+    background-color: $color-type-app
+    textarea
+      border-color: transparentize($color-type-app-contrast, 0.8)
+    form.delete button
+      color: transparentize($color-type-app-contrast, 0.8)
+    form.update button
+      color: transparentize($color-type-app-contrast, 0.8)
+      border-color: transparentize($color-type-app-contrast, 0.8)
+  &.type-game, &.type-game textarea, &.type-game p
+    color: $color-type-game-contrast
+    background-color: $color-type-game
+    textarea
+      border-color: transparentize($color-type-game-contrast, 0.8)
+    form.delete button
+      color: transparentize($color-type-game-contrast, 0.8)
+    form.update button
+      color: transparentize($color-type-game-contrast, 0.8)
+      border-color: transparentize($color-type-game-contrast, 0.8)
+  &.type-site, &.type-site textarea, &.type-site p
+    color: $color-type-site-contrast
+    background-color: $color-type-site
+    textarea
+      border-color: transparentize($color-type-site-contrast, 0.8)
+    form.delete button
+      color: transparentize($color-type-site-contrast, 0.8)
+    form.update button
+      color: transparentize($color-type-site-contrast, 0.8)
+      border-color: transparentize($color-type-site-contrast, 0.8)
+  &.type-hardware, &.type-hardware textarea, &.type-hardware p
+    color: $color-type-hardware-contrast
+    background-color: $color-type-hardware
+    textarea
+      border-color: transparentize($color-type-hardware-contrast, 0.8)
+    form.delete button
+      color: transparentize($color-type-hardware-contrast, 0.8)
+    form.update button
+      color: transparentize($color-type-hardware-contrast, 0.8)
+      border-color: transparentize($color-type-hardware-contrast, 0.8)
+  &.type-other, &.type-other textarea, &.type-other p
+    color: $color-type-other-contrast
+    background-color: $color-type-other
+    textarea
+      border-color: transparentize($color-type-other-contrast, 0.8)
+    form.delete button
+      color: transparentize($color-type-other-contrast, 0.8)
+    form.update button
+      color: transparentize($color-type-other-contrast, 0.8)
+      border-color: transparentize($color-type-other-contrast, 0.8)

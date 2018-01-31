@@ -1,0 +1,7 @@
+-extends "template.haml"
+-block content
+  %h2 #{batch.Name}
+  %ul
+    -for event in batch.Events
+      %li
+        %a(href="#{route('event', {'batch': batch, 'event': event})}") #{event.Name}
