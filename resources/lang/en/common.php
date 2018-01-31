@@ -22,6 +22,7 @@ return array(
     'save'                      => "Save",
     'delete'                    => "x",
     'create'                    => "Create New",
+    'more'                      => "See More",
 
     'status.saved'              => "Saved!",
     'status.upload-processing'  => "Photo upload is processing. Check back in a few minutes.",

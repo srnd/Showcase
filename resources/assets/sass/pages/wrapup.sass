@@ -1,6 +1,21 @@
 body.page-wrapup
   article.event
+    padding-bottom: +modular-scale(6)
+    &:after
+      content: ""
+      clear: both
+      display: block
     & > h2, & > h3, section.photos
       +grid-column(12)
+      a
+        text-decoration: none
+    & > a.cta
+      @extend %button-cta
+      margin-right: 20px
+      margin-left: 20px
+      margin-bottom: 1rem
+      +desktop
+        float: right
+        margin-top: -1 * +modular-scale(4) - 15pt
     section.photos
       margin-bottom: 1rem

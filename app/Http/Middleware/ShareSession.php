@@ -10,6 +10,7 @@ class ShareSession
     public function handle(Request $request, \Closure $next)
     {
         \View::share('username', session()->get('username'));
+        \View::share('version', trim(@file_get_contents(dirname(dirname(dirname(dirname(__FILE__)))).'/.version')));
 
         $params = \Route::current()->parameters();
         $event = $params['event'] ?? null;

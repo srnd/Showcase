@@ -8,20 +8,25 @@
   #{__('common.nav.wrapup')}
 -block content
   -for event in events
-    %article.event
-      %h2
-        %a(href="#{route('event', {'batch': event.batch, 'event': event})}") CodeDay #{event.Name} #{event.Batch.Name}
+    -if event.Photos|length > 0 or event.Teams|length > 0
+      %article.event
+        %h2
+          %a(href="#{route('event', {'batch': event.batch, 'event': event})}") CodeDay #{event.Name} #{event.Batch.Name}
+        %a.cta(href="#{route('event', {'batch': event.batch, 'event': event})}") #{__('common.more')}
 
-      %section.photos
-        -for photo in event.Photos
-          #{widgets.photo(false, event.batch, event, photo)}
+        %section.photos
+          -for photo in event.Photos|slice(0,40)
+            #{widgets.photo(false, event.batch, event, photo)}
 
-      %section.teams.full
-        -for team in event.Teams
-          #{widgets.team(false, batch, event, team)}
+        -if event.Teams|length > 0
+          -if event.Photos|length > 0
+            %h3 #{__('common.nav.teams')}
+          %section.teams.full
+            -for team in event.Teams
+              #{widgets.team(false, batch, event, team)}
 
   %link(rel="stylesheet" href="/assets/js/justifiedGallery.min.css")
   %script(src="/assets/js/jquery.js")
   %script(src="/assets/js/jquery.justifiedGallery.min.js")
   :javascript
-    $("section.photos").justifiedGallery({rowHeight: 175, maxRowHeight: 300, margins: 6, border: 0});
+    $("section.photos").justifiedGallery({rowHeight: 75, maxRowHeight: 100, margins: 6, border: 0, lastRow: 'justify'});
