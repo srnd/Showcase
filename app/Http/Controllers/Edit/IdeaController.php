@@ -17,9 +17,9 @@ class IdeaController extends EditController
      * @param  \Showcase\Models\Event    $event
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Batch $batch, Event $event)
+    public function store(Request $request, string $batch, string $event)
     {
-        $event = Event::GetFromBatchNameAndWebname($batch->Webname, $event->Webname);
+        $event = Event::GetFromBatchNameAndWebname($batch, $event);
         $idea = new Idea;
         $idea->Type = $request->get('type') ?? 'other';
         $idea->Idea = $request->get('idea');
@@ -38,9 +38,9 @@ class IdeaController extends EditController
      * @param  \Showcase\Models\Idea  $idea
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Batch $batch, Event $event, Idea $idea)
+    public function update(Request $request, string $batch, string $event, Idea $idea)
     {
-        $event = Event::GetFromBatchNameAndWebname($batch->Webname, $event->Webname);
+        $event = Event::GetFromBatchNameAndWebname($batch, $event);
         $idea->Type = $request->get('type') ?? $idea->Type;
         $idea->Idea = $request->get('idea');
         $idea->save();
@@ -56,9 +56,8 @@ class IdeaController extends EditController
      * @param  \Showcase\Models\Idea  $idea
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Batch $batch, Event $event, Idea $idea)
+    public function destroy($batch, $event, Idea $idea)
     {
-        $event = Event::GetFromBatchNameAndWebname($batch->Webname, $event->Webname);
         $idea->delete();
         return $this->Ok();
     }

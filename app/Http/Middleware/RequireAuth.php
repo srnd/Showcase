@@ -4,6 +4,7 @@ namespace Showcase\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Showcase\Models\Event;
 
 class RequireAuth
 {

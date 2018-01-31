@@ -18,9 +18,9 @@ class PhotoController extends EditController
      * @param  \Showcase\Models\Event    $event
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Batch $batch, Event $event)
+    public function store(Request $request, string $batch, string $event)
     {
-        $event = Event::GetFromBatchNameAndWebname($batch->Webname, $event->Webname);
+        $event = Event::GetFromBatchNameAndWebname($batch, $event);
         Photos::Host($request->file('file'), function($urls) use($event) {
             $photo = new \Showcase\Models\Photo;
             $photo->Url         = $urls['o'];
@@ -54,9 +54,8 @@ class PhotoController extends EditController
      * @param  \Showcase\Models\Photo  $photo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Batch $batch, Event $event, Photo $photo)
+    public function destroy($batch, $event, Photo $photo)
     {
-        $event = Event::GetFromBatchNameAndWebname($batch->Webname, $event->Webname);
         $photo->delete();
         return $this->Ok();
     }

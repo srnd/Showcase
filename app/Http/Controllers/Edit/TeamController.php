@@ -18,9 +18,9 @@ class TeamController extends EditController
      * @param  \Showcase\Models\Event    $event
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Batch $batch, Event $event)
+    public function store(Request $request, string $batch, string $event)
     {
-        $event = Event::GetFromBatchNameAndWebname($batch->Webname, $event->Webname);
+        $event = Event::GetFromBatchNameAndWebname($batch, $event);
 
         $team = new Team;
         $team->Name = $request->get('name');
@@ -52,9 +52,9 @@ class TeamController extends EditController
      * @param  \Showcase\Models\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Batch $batch, Event $event, Team $team)
+    public function update(Request $request, string $batch, string $event, Team $team)
     {
-        $event = Event::GetFromBatchNameAndWebname($batch->Webname, $event->Webname);
+        $event = Event::GetFromBatchNameAndWebname($batch, $event);
 
         $team->Name = $request->get('name') ?? $team->Name;
         $team->Description = $request->get('description') ?? $team->Description;
@@ -86,10 +86,8 @@ class TeamController extends EditController
      * @param  \Showcase\Models\Event    $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Batch $batch, Event $event, Team $team)
+    public function destroy($batch, $event, Team $team)
     {
-        $event = Event::GetFromBatchNameAndWebname($batch->Webname, $event->Webname);
-        
         $team->delete();
         return $this->Ok();
     }
