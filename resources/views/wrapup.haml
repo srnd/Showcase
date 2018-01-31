@@ -22,7 +22,7 @@
             %p #{event.Thanks}
 
         %section.photos
-          -for photo in event.PhotosRandom|slice(0,40)
+          -for photo in event.PhotosRandom|slice(0,20)
             #{widgets.photo(false, event.batch, event, photo)}
 
         -if event.Teams|length > 0
@@ -36,4 +36,4 @@
   %script(src="/assets/js/jquery.js")
   %script(src="/assets/js/jquery.justifiedGallery.min.js")
   :javascript
-    $("section.photos").justifiedGallery({rowHeight: 75, maxRowHeight: 100, margins: 6, border: 0, lastRow: 'justify'});
+    $("section.photos").justifiedGallery({rowHeight: 120, maxRowHeight: 120, margins: 6, border: 0, lastRow: 'justify'});
