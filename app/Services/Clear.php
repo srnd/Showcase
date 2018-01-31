@@ -27,7 +27,7 @@ class Clear
 
     public static function GetEventsWithAccess(string $username)
     {
-        return json_decode(self::GetClient()->get('events/has-access', ['query' => ['username' => $username]])->getBody()->getContents());
+        return json_decode(self::GetClient()->get('events/has-access', ['query' => ['username' => $username], 'timeout' => 0])->getBody()->getContents());
     }
 
     private static $_client = null;
