@@ -1,0 +1,56 @@
+-extends "template.haml"
+-import "widgets.haml" as widgets
+-block section
+  event
+-block page
+  wrapup-event
+-block title
+  #{__('common.nav.wrapup')}
+-block content
+  %section.event
+    %header
+      %h2
+        CodeDay #{event.Name} #{event.Batch.Name}
+      .hosted
+        -if event.VenueName
+          #{__('wrapup.hosted', {'name': event.VenueName})}
+
+    %section.lead
+      %section.render
+        -if event.Post
+          %section.post
+            #{event.Post|markdown|raw}
+
+        -if event.Thanks
+          %section.thanks
+            %p #{event.Thanks}
+
+      -if can_edit
+        %form(method="post" action="#{route('event.wrapup.update', {'batch': batch, 'event': event})}")
+          #{csrf_field()}
+          %h3 #{__('wrapup.post.title')}
+          %textarea(name="post" placeholder="#{__('wrapup.post.placeholder')}")="#{event.Post}"
+
+          %h3 #{__('wrapup.thanks.title')}
+          %input(type="text" name="thanks" placeholder="#{__('wrapup.thanks.placeholder')}" value="#{event.Thanks}")
+
+          %input(type="submit" value="#{__('common.save')}")
+
+    -if event.Teams|length > 0
+      %h3 #{__('wrapup.section.teams')}
+      %section.teams.full
+        -for team in event.Teams
+          #{widgets.team(false, batch, event, team)}
+
+    -if event.Photos|length > 0
+      %h3 #{__('wrapup.section.photos')}
+      %section.photos
+        -for photo in event.Photos
+          #{widgets.photo(false, event.batch, event, photo)}
+
+
+  %link(rel="stylesheet" href="/assets/js/justifiedGallery.min.css")
+  %script(src="/assets/js/jquery.js")
+  %script(src="/assets/js/jquery.justifiedGallery.min.js")
+  :javascript
+    $("section.photos").justifiedGallery({rowHeight: 100, maxRowHeight: 125, margins: 6, border: 0, lastRow: 'justify'});

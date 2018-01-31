@@ -48,7 +48,7 @@ return [
         Showcase\Providers\AuthServiceProvider::class,
         Showcase\Providers\EventServiceProvider::class,
         Showcase\Providers\RouteServiceProvider::class,
-
+        Showcase\Providers\HelperServiceProvider::class,
     ],
 
     'aliases' => [

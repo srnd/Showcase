@@ -45,6 +45,9 @@ class SyncClearEvents implements ShouldQueue
             $eventModel->Webname    = $event->webname;
             $eventModel->Name       = $event->region_name;
             $eventModel->Timezone   = $event->timezone;
+            if (isset($event->venue) && isset($event->venue->name)) {
+                $eventModel->VenueName = $event->venue->name;
+            }
 
             $eventModel->save();
 

@@ -24,12 +24,25 @@ class GlobalController extends Controller
 
     public function GetRegion(string $region)
     {
-        return view('wrapup', ['events' => Event::where('region', '=', $region)->get()]);
+        $events = Event
+            ::select('events.*')
+            ->join('batches', 'batches.Id', '=', 'events.BatchId')
+            ->where('region', '=', $region)
+            ->orderBy('batches.StartsAt', 'DESC')
+            ->with('Photos')
+            ->get();
+        return view('wrapup', ['events' => $events]);
     }
 
     public function GetRegionJson(string $region)
     {
-        $events = Event::where('region', '=', $region)->with('Photos')->get();
+        $events = Event
+            ::select('events.*')
+            ->join('batches', 'batches.Id', '=', 'events.BatchId')
+            ->where('region', '=', $region)
+            ->orderBy('batches.StartsAt', 'DESC')
+            ->with('Photos')
+            ->get();
         return response(json_encode($events));
     }
 

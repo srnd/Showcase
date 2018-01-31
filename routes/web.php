@@ -21,8 +21,13 @@ use Illuminate\Http\Request;
     \Route::get('/wrapup',                  'EventController@GetWrapup')        ->name('event.wrapup');
 
     \Route::get('/presentations',           'EventController@GetPresentations') ->name('event.presentations');
-    \Route::post('/presentations/shuffle',  'EventController@PostShuffle')      ->name('event.presentations.shuffle');
-    \Route::post('/presentations/order',    'EventController@PostOrder')        ->name('event.presentations.order');
+    \Route::get('/wrapup',                  'EventController@GetWrapup')        ->name('event.wrapup');
+
+    \Route::middleware('edit')->group(function() {
+        \Route::post('/presentations/shuffle',  'EventController@PostShuffle')  ->name('event.presentations.shuffle');
+        \Route::post('/presentations/order',    'EventController@PostOrder')    ->name('event.presentations.order');
+        \Route::post('/wrapup',                 'EventController@PostWrapup')   ->name('event.wrapup.update');
+    });
 }); 
 
 // Edit Controllers

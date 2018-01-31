@@ -21,7 +21,7 @@ class EventController extends Controller
     {
         $r = ['batch' => $this->event->batch, 'event' => $this->event];
 
-        if      (!$this->event->IsInProgress)               return redirect()->route('event.photos', $r);
+        if      (!$this->event->IsInProgress)               return redirect()->route('event.wrapup', $r);
         elseif  (!$this->event->AreTeamsFormed)             return redirect()->route('event.ideas', $r);
         elseif  (!$this->event->ArePresentationsStarting)   return redirect()->route('event.teams', $r);
         else                                                return redirect()->route('event.presentations', $r);
@@ -66,5 +66,20 @@ class EventController extends Controller
         }
 
         return json_encode(['status' => 200]);
+    }
+
+    public function GetWrapup()
+    {
+        return view('wrapup-event');
+    }
+
+    public function PostWrapup(Request $request)
+    {
+        $this->event->Thanks = $request->get('thanks');
+        $this->event->Post = $request->get('post');
+        $this->event->save();
+
+        $request->session()->flash('success', __('common.status.saved'));
+        return redirect()->back();
     }
 }

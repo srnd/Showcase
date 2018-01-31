@@ -46,6 +46,11 @@ class Event extends Model
         return $this->hasMany(Photo::class, 'EventId', 'Id')->orderBy('CreatedAt', 'ASC');
     }
 
+    public function PhotosRandom()
+    {
+        return $this->hasMany(Photo::class, 'EventId', 'Id')->orderByRaw('RAND()');
+    }
+
     public function getStartsAtAttribute()
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->Batch->StartsAt->format('Y-m-d H:i:s'), $this->Timezone);

@@ -1,14 +1,25 @@
-body.page-wrapup
+body.page-wrapup,
   article.event
     padding-bottom: +modular-scale(6)
     &:after
       content: ""
       clear: both
       display: block
-    & > h2, & > h3, section.photos
+    & > header
       +grid-column(12)
-      a
-        text-decoration: none
+      margin-bottom: 1rem
+      h2
+        margin-bottom: 0
+        a
+          text-decoration: none
+      .hosted
+        height: +modular-scale(1)
+        font-weight: bold
+    section.thanks
+      +grid-column(12)
+      p
+        font-size: +modular-scale(-1)
+        font-style: italic
     & > a.cta
       @extend %button-cta
       margin-right: 20px
@@ -17,5 +28,60 @@ body.page-wrapup
       +desktop
         float: right
         margin-top: -1 * +modular-scale(4) - 15pt
+    & > h3
+      +grid-column(12)
     section.photos
       margin-bottom: 1rem
+      +grid-column(12)
+
+
+body.page-wrapup-event
+  form
+    +grid-column(8)
+    +grid-push(2)
+    @extend %featured
+    padding-top: 0
+    input, textarea
+      max-width: none
+    textarea
+      height: 20rem
+
+  section.event
+    +grid-column(12)
+    & > header
+      margin-bottom: 1rem
+      h2
+        margin-bottom: 0
+        a
+          text-decoration: none
+      .hosted
+        height: +modular-scale(1)
+        font-weight: bold
+
+    section.lead
+      +desktop
+        +grid-collapse
+      section.render
+        +desktop
+          +grid-column(7)
+        section.thanks p
+          font-size: +modular-scale(-1)
+          font-style: italic
+
+        section.post, section.post p
+          font-size: +modular-scale(1)
+
+      form
+        +desktop
+          +grid-column(5)
+
+    & > h3
+      clear: both
+
+    section.teams
+      +grid-collapse
+      margin-bottom: +modular-scale(4)
+      &:after
+        content: ""
+        display: block
+        clear: both

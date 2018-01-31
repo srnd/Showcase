@@ -10,12 +10,19 @@
   -for event in events
     -if event.Photos|length > 0 or event.Teams|length > 0
       %article.event
-        %h2
-          %a(href="#{route('event', {'batch': event.batch, 'event': event})}") CodeDay #{event.Name} #{event.Batch.Name}
+        %header
+          %h2
+            %a(href="#{route('event', {'batch': event.batch, 'event': event})}") CodeDay #{event.Name} #{event.Batch.Name}
+          .hosted
+            -if event.VenueName
+              #{__('wrapup.hosted', {'name': event.VenueName})}
         %a.cta(href="#{route('event', {'batch': event.batch, 'event': event})}") #{__('common.more')}
+        -if event.Thanks
+          %section.thanks
+            %p #{event.Thanks}
 
         %section.photos
-          -for photo in event.Photos|slice(0,40)
+          -for photo in event.PhotosRandom|slice(0,40)
             #{widgets.photo(false, event.batch, event, photo)}
 
         -if event.Teams|length > 0
