@@ -14,8 +14,7 @@ class AuthController extends Controller
         $s5->RequireLogin();
         $request->session()->put('username', $s5->User->me()->is_admin);
         if ($s5->User->me()->is_admin) {
-            //$request->session()->put('is_admin', true);
-            //return redirect()->back();
+            $request->session()->put('is_admin', true);
         }
         $events = Clear::GetEventsWithAccess($s5->User->me()->username);
         $request->session()->put('managed_events', array_map(function($event) { return $event->id; }, $events));

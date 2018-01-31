@@ -9,10 +9,16 @@ use Illuminate\Http\Request;
 
 class GlobalController extends Controller
 {
-    public function GetIndex()
+    public function GetIndex(Request $request)
     {
         $currentBatch = Batch::Current();
         if (isset($currentBatch)) return redirect()->route('batch', ['batch' => $currentBatch]);
+
+        if ($request->session()->has('managed_events')) {
+            $events = array_map(function($id) { return Event::where('Id', '=', $id)->first(); }, $request->session()->get('managed_events'));
+            view()->share('my_events', $events);
+        }
+
         return view('index', ['all_batches' => Batch::orderBy('StartsAt', 'Desc')->get()]);
     }
 

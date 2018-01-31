@@ -5,6 +5,13 @@
   index
 -block content
   %section.batches
+    -if my_events
+      %section.batch
+        %h2 #{__('index.my-events')}
+        %ul
+          -for event in my_events
+            %li
+              %a(href="#{route('event', {batch: event.batch, event: event})}") #{event.Name} #{event.batch.Name}
     -for batch in all_batches
       -if batch.Events|length > 0 and not batch.IsFuture
         %section.batch
