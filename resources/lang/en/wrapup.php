@@ -7,6 +7,6 @@ return array(
     'post.title'            => "Wrap-Up Post",
     'post.placeholder'      => "Supports markdown.",
 
-    'section.teams'         => "What they Made",
-    'section.photos'        => "Photos at The Event",
+    'section.teams'         => "What They Made",
+    'section.photos'        => "Photos At The Event",
 );
