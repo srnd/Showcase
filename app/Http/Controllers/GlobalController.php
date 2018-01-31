@@ -13,7 +13,7 @@ class GlobalController extends Controller
     {
         $currentBatch = Batch::Current();
         if (isset($currentBatch)) return redirect()->route('batch', ['batch' => $currentBatch]);
-        return view('index', ['all_batches' => Batch::get()]);
+        return view('index', ['all_batches' => Batch::orderBy('StartsAt', 'Desc')->get()]);
     }
 
     public function GetBatch(Batch $batch)
