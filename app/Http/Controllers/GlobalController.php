@@ -15,7 +15,9 @@ class GlobalController extends Controller
         if (isset($currentBatch)) return redirect()->route('batch', ['batch' => $currentBatch]);
 
         if ($request->session()->has('managed_events')) {
-            $events = array_map(function($id) { return Event::where('Id', '=', $id)->first(); }, $request->session()->get('managed_events'));
+            $eventIds = array_unique($request->session()->get('managed_events'));
+            $events = array_map(function($id) { return Event::where('Id', '=', $id)->first(); }, $eventIds);
+            $events = array_filter($events);
             view()->share('my_events', $events);
         }
 
