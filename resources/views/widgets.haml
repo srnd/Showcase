@@ -14,7 +14,7 @@
       %p #{idea.Idea}
 
 -macro team(can_edit, batch, event, team)
-  %article(class="widget-team")
+  %article(class="widget-team #{can_edit ? 'edit' : 'static'}")
     -if can_edit
       -if team
         %form(class="delete" method="post" action="#{route('team.destroy', {'batch': batch, 'event': event, 'team': team})}")
