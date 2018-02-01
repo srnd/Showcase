@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'by-batch'          => "Batches",
+    'by-region'         => "Regions",
     'my-events'         => "My Events",
-    'title'             => "Choose an event to see cool things students did.",
+    'current'           => "Happening Now",
+    'title'             => "Click to see what fun projects students worked on:",
 );

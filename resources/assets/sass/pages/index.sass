@@ -14,12 +14,18 @@ body.section-index.page-index .content
       color: $color-gray
     h2
       @extend %wave-head
-  section.batches
-    section.batch
-      +grid-column(4)
+
+  ul.groupings
+    padding: 0
+    & > li
+      +desktop
+        +grid-column(4)
       +mobile
         +grid-column(12)
-      display: block
       @extend %featured
+      list-style-type: none
+      margin-bottom: 2rem
       h2
         margin-top: 0
+      & > ul
+        @extend %featured-list

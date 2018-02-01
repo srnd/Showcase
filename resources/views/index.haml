@@ -6,24 +6,36 @@
 -block header
   %header
     .img(style="background-image: url(#{photo.UrlLarge});")
-    .caption #{photo.Event.Batch.Name} #{photo.Event.Name}
+    .caption CodeDay #{photo.Event.Name} #{photo.Event.Batch.Name}
     %h2 #{__('index.title')}
 -block content
-  %section.batches
+  %ul.groupings
     -if my_events
-      %section.batch
+      %li.my
         %h2 #{__('index.my-events')}
         %ul
           -for event in my_events
             %li
               %a(href="#{route('event', {batch: event.batch, event: event})}") #{event.Name} #{event.batch.Name}
-    -for batch in all_batches
-      -if batch.Events|length > 0 and not batch.IsFuture
-        %section.batch
-          %h2
-            %a.batch{"href" => batch.IsCurrent ? false : "#{route('batch', {'batch': batch})}"} #{batch.Name}
-          -if batch.IsCurrent
-            %ul
-              -for event in batch.Events
-                %li
-                  %a(href="#{route('event', {'batch': batch, 'event': event})}") #{event.Name}
+    -elseif current_batch
+      %li.current
+        %h2 #{__('index.current')}
+        %ul
+          -for event in current_batch.Events
+            %li
+              %a(href="#{route('event', {batch: event.batch, event: event})}") #{event.Name}
+
+    %li.batches
+      %h2 #{__('index.by-batch')}
+      %ul
+        -for batch in all_batches
+          -if batch.Events|length > 0 and not batch.IsFuture
+            %li
+              %a.batch(href="#{route('batch', {'batch': batch})}") #{batch.Name}
+
+    %li.regions
+      %h2 #{__('index.by-region')}
+      %ul
+        -for region in all_regions
+          %li
+            %a.batch(href="#{route('region', {'region': region.Region})}") #{region.Name}

@@ -29,6 +29,21 @@ $button-shadow-color-light: transparentize($color-gray, .85)
   box-shadow: 0 0 2px $button-shadow-color-light, 0 2px 2px $button-shadow-color
   padding: 1rem
 
+%featured-list
+  padding: 0
+  margin-bottom: -1rem
+  margin-top: -1rem
+  li
+    list-style-type: none
+    a
+      display: block
+      padding: 0.75rem 1rem
+      margin: auto -1rem
+      border-top: 1px solid $color-gray-light
+      text-decoration: none
+      &:hover
+        background-color: $color-gray-lightest
+
 %button
   @extend %rounded
   padding: 0.5rem 1rem

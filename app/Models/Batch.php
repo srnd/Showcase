@@ -36,8 +36,8 @@ class Batch extends Model
     public static function Current()
     {
         return Batch
-                ::where('StartsAt', '<', Carbon::now())
-                ->where('StartsAt', '>', Carbon::now()->addHours(-12))
+                ::where('StartsAt', '<', Carbon::now()->addHours(12))
+                ->where('StartsAt', '>', Carbon::now()->addHours(-36))
                 ->first();
     }
 

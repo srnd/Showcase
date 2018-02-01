@@ -37,6 +37,9 @@
             -if can_edit or not event.IsInProgress
               %li(class="#{block('page')|trim == 'wrapup-event' ? 'active' : ''}")
                 %a(href="#{route('event.wrapup', {'wrapup': event.batch, 'event': event})}") #{__('common.nav.wrapup')}
+          -if block('page')|trim == 'wrapup'
+            %li(class="active")
+              %a(href="") #{__('common.nav.wrapup')}
 
     .content
       -block header

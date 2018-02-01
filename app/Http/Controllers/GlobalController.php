@@ -11,9 +11,6 @@ class GlobalController extends Controller
 {
     public function GetIndex(Request $request)
     {
-        $currentBatch = Batch::Current();
-        if (isset($currentBatch)) return redirect()->route('batch', ['batch' => $currentBatch]);
-
         if ($request->session()->has('managed_events')) {
             $eventIds = array_unique($request->session()->get('managed_events'));
             $events = array_map(function($id) { return Event::where('Id', '=', $id)->first(); }, $eventIds);
@@ -22,8 +19,10 @@ class GlobalController extends Controller
         }
 
         return view('index', [
+            'photo' => Photo::orderByRaw('RAND()')->with('event')->first(),
             'all_batches' => Batch::orderBy('StartsAt', 'Desc')->get(),
-            'photo' => Photo::orderByRaw('RAND()')->with('event')->first()
+            'current_batch' => Batch::Current(),
+            'all_regions' => Event::groupBy('region')->get(),
         ]);
     }
 
