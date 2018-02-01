@@ -69,6 +69,9 @@
           -else
             %li
               %a(href="#{route('auth.login')}") #{__('common.nav.login')}
+          -if not refresh
+            %li
+              %a(href="?refresh") #{__('common.nav.refresh')}
     -if session('success') or session('error')
       :javascript
         setTimeout(function() {
@@ -76,3 +79,9 @@
           message.style.height = 0;
           message.style.padding = 0
         }, 5000);
+
+    -if refresh
+      :javascript
+        setTimeout(function(){
+          window.location.reload();
+        }, 10000);

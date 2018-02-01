@@ -12,6 +12,8 @@ class ShareSession
         \View::share('username', session()->get('username'));
         \View::share('version', trim(@file_get_contents(dirname(dirname(dirname(dirname(__FILE__)))).'/.version')));
 
+        \View::share('refresh', $request->has('refresh'));
+
         $params = \Route::current()->parameters();
         $event = $params['event'] ?? null;
         if (is_string($event)) $event = Event::GetFromBatchNameAndWebname($params['batch'], $params['event']);

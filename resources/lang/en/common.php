@@ -12,6 +12,7 @@ return array(
     'nav.login'                 => "Login",
     'nav.logout'                => "Logout",
     'nav.wrapup'                => "Wrapup",
+    'nav.refresh'               => "Refresh",
 
     'type.app'                  => "App",
     'type.game'                 => "Game",
