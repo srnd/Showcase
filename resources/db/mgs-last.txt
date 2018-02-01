@@ -304,7 +304,6 @@ porcupine
 porpoise
 possum
 potoroo
-prairie dog
 prion
 pronghorn
 ptarmigan
@@ -335,11 +334,9 @@ rook
 rottweiler
 sahiwal
 saiga
-saint bernard
 saki
 salamander
 salmon
-sand dollar
 sandpiper
 sanga
 sardine

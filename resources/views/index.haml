@@ -3,6 +3,11 @@
   index
 -block page
   index
+-block header
+  %header
+    .img(style="background-image: url(#{photo.UrlLarge});")
+    .caption #{photo.Event.Batch.Name} #{photo.Event.Name}
+    %h2 #{__('index.title')}
 -block content
   %section.batches
     -if my_events

@@ -21,7 +21,10 @@ class GlobalController extends Controller
             view()->share('my_events', $events);
         }
 
-        return view('index', ['all_batches' => Batch::orderBy('StartsAt', 'Desc')->get()]);
+        return view('index', [
+            'all_batches' => Batch::orderBy('StartsAt', 'Desc')->get(),
+            'photo' => Photo::orderByRaw('RAND()')->with('event')->first()
+        ]);
     }
 
     public function GetBatch(Batch $batch)

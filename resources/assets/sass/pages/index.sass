@@ -1,4 +1,19 @@
-body.section-index.page-index
+body.section-index.page-index .content
+  & > header
+    padding-bottom: 2rem
+    .img
+      width: 100%
+      height: 20rem
+      background:
+        size: cover
+        position: 50% 50%
+        repeat: no-repeat
+    .caption
+      font-size: +modular-scale(-1)
+      font-style: italic
+      color: $color-gray
+    h2
+      @extend %wave-head
   section.batches
     section.batch
       +grid-column(4)
