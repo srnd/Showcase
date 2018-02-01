@@ -5,5 +5,5 @@ return array(
     'by-region'         => "Locations",
     'my-events'         => "My Events",
     'current'           => "Happening Now",
-    'title'             => "Click to see what fun projects students worked on:",
+    'title'             => "Click to see the fun projects students made:",
 );
