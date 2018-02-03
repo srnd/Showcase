@@ -30,11 +30,11 @@
       parallelUploads: 4,
       chunking: true,
       forceChunking: true,
-      chunkSize: 1024*1024*1,
+      chunkSize: 1024*512,
       parallelChunkUploads: false,
       retryChunks: true,
-      retryChunksLimit: 3,
-      maxFilesize: 10,
+      retryChunksLimit: 4,
+      maxFilesize: 15,
       acceptedFiles: "image/*",
       dictDefaultMessage: "#{__('photos.upload')}"
     };
