@@ -25,7 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new Jobs\SyncClearBatches)->EveryMinute();
+        $schedule->job(new Jobs\SyncClearBatches)->EveryTenMinutes();
+        $schedule->command('uploads:clear')->daily();
     }
 
     /**
