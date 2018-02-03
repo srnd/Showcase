@@ -73,6 +73,22 @@ class Photos
     }
 
     /**
+     * Deletes a file from s3.
+     *
+     * @param string $originalFile  The URL of the file to delete (must be from a call to Host).
+     * @return void
+     */
+    public static function Delete(string $originalFile)
+    {
+        $urlPrefix = config('filesystems.disks.s3.url');
+        if (substr($originalFile, 0, strlen($urlPrefix)) !== $urlPrefix)
+            throw new \Exception("URL is not a hosted photo");
+
+        $photoPath = substr($originalFile, strlen($urlPrefix));
+        \Storage::disk('s3')->delete($photoPath);
+    }
+
+    /**
      * Resizes a file stored in the default s3 bucket, and saves the resized version into the default s3 bucket.
      *
      * Uses Kraken.io, and automatically compresses the file (using lossy JPG compression).

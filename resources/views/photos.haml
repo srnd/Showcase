@@ -8,8 +8,7 @@
   #{__('common.nav.photos')}
 -block content
   -if can_edit
-    %p #{__('photos.delay')}
-    %form(class="create dropzone" method="post" action="#{route('photo.store', {'batch': batch, 'event': event})}")
+    %form(id="photo-upload" class="create dropzone" method="post" action="#{route('photo.store', {'batch': batch, 'event': event})}")
       #{csrf_field()}
 
   -if event.Photos|length == 0 and not can_edit
@@ -27,3 +26,15 @@
   %script(src="/assets/js/jquery.justifiedGallery.min.js")
   :javascript
     $("section.photos").justifiedGallery({rowHeight: 175, maxRowHeight: 300, margins: 6, border: 0, lastRow: 'justify'});
+    Dropzone.options.photoUpload = {
+      parallelUploads: 4,
+      chunking: true,
+      forceChunking: true,
+      chunkSize: 1024*1024*1,
+      parallelChunkUploads: false,
+      retryChunks: true,
+      retryChunksLimit: 3,
+      maxFilesize: 10,
+      acceptedFiles: "image/*",
+      dictDefaultMessage: "#{__('photos.upload')}"
+    };

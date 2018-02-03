@@ -7,6 +7,8 @@ use Showcase\Models\Event;
 use Showcase\Models\Photo;
 use Illuminate\Http\Request;
 use Showcase\Services\Photos;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 
 class PhotoController extends EditController
 {
@@ -20,30 +22,31 @@ class PhotoController extends EditController
      */
     public function store(Request $request, string $batch, string $event)
     {
-        $event = Event::GetFromBatchNameAndWebname($batch, $event);
-        Photos::Host($request->file('file'), function($urls) use($event) {
-            $photo = new \Showcase\Models\Photo;
-            $photo->Url         = $urls['o'];
-            $photo->UrlLarge    = $urls['l'];
-            $photo->UrlMedium   = $urls['m'];
-            $photo->UrlSmall    = $urls['s'];
-            $photo->EventId     = $event->Id;
-            $photo->save();
-        });
+        $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
+        if (!$receiver->isUploaded()) abort(400);
+
+        $save = $receiver->receive();
+
+        if ($save->isFinished()) {
+            $event = Event::GetFromBatchNameAndWebname($batch, $event);
+            Photos::Host($save->getFile(), function($urls) use($event) {
+                $photo = new \Showcase\Models\Photo;
+                $photo->Url         = $urls['o'];
+                $photo->UrlLarge    = $urls['l'];
+                $photo->UrlMedium   = $urls['m'];
+                $photo->UrlSmall    = $urls['s'];
+                $photo->EventId     = $event->Id;
+                $photo->save();
+            });
+        } else {
+            $handler = $save->handler();
+
+            return response()->json([
+                "done" => $handler->getPercentageDone(),
+            ]);
+        }
 
         return $this->Ok();
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Showcase\Models\Photo  $photo
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Photo $photo)
-    {
-        //
     }
 
     /**
@@ -56,6 +59,10 @@ class PhotoController extends EditController
      */
     public function destroy($batch, $event, Photo $photo)
     {
+        Photos::Delete($photo->Url);
+        Photos::Delete($photo->UrlLarge);
+        Photos::Delete($photo->UrlMedium);
+        Photos::Delete($photo->UrlSmall);
         $photo->delete();
         return $this->Ok();
     }

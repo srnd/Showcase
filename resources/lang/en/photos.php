@@ -1,5 +1,5 @@
 <?php
 
 return array(
-    'delay'             => "You may leave the page once all uploads are complete, but uploads may take several minutes to show up on the site.",
+    'upload'             => "Click here or drag photos to upload. You can leave once uploads are complete, but files will be converted before displaying.",
 );

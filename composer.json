@@ -21,6 +21,7 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "mthaml/mthaml": "*",
         "opis/closure": "^3.0.0",
+        "pion/laravel-chunk-upload": "^1.1",
         "predis/predis": "^1.1",
         "rcrowe/twigbridge": "*",
         "studentrnd/s5laravel": "1.2.*"

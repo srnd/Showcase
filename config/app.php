@@ -40,6 +40,7 @@ return [
          * Package Service Providers...
          */
         TwigBridge\ServiceProvider::class,
+        Pion\Laravel\ChunkUpload\Providers\ChunkUploadServiceProvider::class,
 
         /*
          * Application Service Providers...
