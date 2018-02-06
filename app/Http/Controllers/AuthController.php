@@ -19,7 +19,7 @@ class AuthController extends Controller
         $events = Clear::GetEventsWithAccess($s5->User->me()->username);
         $request->session()->put('managed_events', array_map(function($event) { return $event->id; }, $events));
 
-        return redirect()->route('index');
+        return redirect()->back();
     }
 
     public function GetLogout(Request $request)
@@ -28,6 +28,6 @@ class AuthController extends Controller
         $request->session()->forget('managed_events');
         $request->session()->forget('is_admin');
 
-        return redirect()->route('index');
+        return redirect()->back();
     }
 }
