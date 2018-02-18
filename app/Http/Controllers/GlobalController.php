@@ -28,8 +28,7 @@ class GlobalController extends Controller
 
     public function GetBatch(Batch $batch)
     {
-        if      (!Batch::Current())     return view('wrapup', ['events' => $batch->Events]);
-        else                            return view('batch', ['batch' => $batch]);
+        return view('wrapup', ['events' => $batch->Events]);
     }
 
     public function GetRegion(string $region)
