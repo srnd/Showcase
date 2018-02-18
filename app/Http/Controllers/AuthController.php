@@ -19,7 +19,10 @@ class AuthController extends Controller
         $events = Clear::GetEventsWithAccess($s5->User->me()->username);
         $request->session()->put('managed_events', array_map(function($event) { return $event->id; }, $events));
 
-        return redirect()->back();
+        if (parse_url(url()->previous(), PHP_URL_HOST) == parse_url(url()->current(), PHP_URL_HOST))
+            return redirect()->back();
+        else
+            return redirect()->route('index');
     }
 
     public function GetLogout(Request $request)
