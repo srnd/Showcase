@@ -19,7 +19,7 @@ class AuthController extends Controller
         $events = Clear::GetEventsWithAccess($s5->User->me()->username);
         $request->session()->put('managed_events', array_map(function($event) { return $event->id; }, $events));
 
-        if (parse_url(url()->previous(), PHP_URL_HOST) == parse_url(url()->current(), PHP_URL_HOST))
+        if (parse_url(url()->previous(), PHP_URL_HOST) == parse_url(url()->current(), PHP_URL_HOST) && !$request->get('_s5_do'))
             return redirect()->back();
         else
             return redirect()->route('index');
