@@ -11,7 +11,7 @@
   %meta(property="og:title" content="CodeDay #{event.Name} #{event.Batch.Name}")
   %meta(property="og:description" content="#{event.Post ?? __('wrapup.description.generic', {date: event.StartsAt.format('F j-')~event.EndsAt.format('j, Y'), venue: event.VenueName})}")
   -if event.Photos|length > 0
-    -for photo in event.PhotosRandom|slice(0,6)
+    -for photo in event.PhotosRandom|slice(0,10)
       %meta(property="og:image" content="#{photo.UrlMedium}")
 
 -block content
