@@ -11,6 +11,7 @@ class ShareSession
     {
         \View::share('username', session()->get('username'));
         \View::share('version', trim(@file_get_contents(dirname(dirname(dirname(dirname(__FILE__)))).'/.version')));
+        \View::share('url', $request->url());
 
         \View::share('refresh', $request->has('refresh'));
 

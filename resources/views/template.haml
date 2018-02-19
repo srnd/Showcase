@@ -2,12 +2,19 @@
 %html
   %head
     -if block('title')
-      %title #{block('title')|trim} ~ #{__('common.site.title')}
+      -set title="#{block('title')|trim} ~ #{__('common.site.title')}"
     -else
-      %title #{__('common.site.title')}
+      -set title="#{__('common.site.title')}"
 
+    %title #{title}
     %link(rel="stylesheet" href="/assets/css/style.css?v=#{version}")
     %meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1")
+
+    %meta(property="og:url" content="#{url}")
+    %meta(property="fb:app_id" content="134222673401073")
+    -block og
+      %meta(property="og:type" content="website")
+      %meta(property="og:title" content="#{title}")
 
   %body(class="section-#{block('section')|trim} page-#{block('page')|trim}")
 

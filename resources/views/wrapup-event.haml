@@ -6,47 +6,61 @@
   wrapup-event
 -block title
   #{__('common.nav.wrapup')}
+-block og
+  %meta(property="og:type" content="website")
+  %meta(property="og:title" content="CodeDay #{event.Name} #{event.Batch.Name}")
+  %meta(property="og:description" content="#{event.Post ?? __('wrapup.description.generic', {date: event.StartsAt.format('F j-')~event.EndsAt.format('j, Y'), venue: event.VenueName})}")
+  -if event.Photos|length > 0
+    -for photo in event.PhotosRandom|slice(0,6)
+      %meta(property="og:image" content="#{photo.UrlMedium}")
+
 -block content
-  %section.event
-    %header
-      %h2
-        CodeDay #{event.Name} #{event.Batch.Name}
-      .hosted
-        -if event.VenueName
-          #{__('wrapup.hosted', {'name': event.VenueName})}
+  -if event.Teams|length == 0 and event.Photos|length == 0
+    %section.empty
+      %p There's nothing here yet. :(
+  -else
+    %section.event
+      %header
+        %h2
+          CodeDay #{event.Name} #{event.Batch.Name}
+        .hosted
+          -if event.VenueName
+            #{__('wrapup.hosted', {'name': event.VenueName})}
 
-    %section.lead
-      %section.render
-        -if event.Post
+      %section.lead
+        %section.render
           %section.post
-            #{event.Post|markdown|raw}
+            -if event.Post
+              #{event.Post|markdown|raw}
+            -else
+              #{__('wrapup.post.generic', {city: event.Name, batch: event.Batch.Name, venue: event.VenueName})}
 
-        -if event.Thanks
-          %section.thanks
-            %p #{event.Thanks}
+          -if event.Thanks
+            %section.thanks
+              %p #{event.Thanks}
 
-      -if can_edit
-        %form(method="post" action="#{route('event.wrapup.update', {'batch': batch, 'event': event})}")
-          #{csrf_field()}
-          %h3 #{__('wrapup.post.title')}
-          %textarea(name="post" placeholder="#{__('wrapup.post.placeholder')}")="#{event.Post}"
+        -if can_edit
+          %form(method="post" action="#{route('event.wrapup.update', {'batch': batch, 'event': event})}")
+            #{csrf_field()}
+            %h3 #{__('wrapup.post.title')}
+            %textarea(name="post" placeholder="#{__('wrapup.post.placeholder')}")="#{event.Post}"
 
-          %h3 #{__('wrapup.thanks.title')}
-          %input(type="text" name="thanks" placeholder="#{__('wrapup.thanks.placeholder')}" value="#{event.Thanks}")
+            %h3 #{__('wrapup.thanks.title')}
+            %input(type="text" name="thanks" placeholder="#{__('wrapup.thanks.placeholder')}" value="#{event.Thanks}")
 
-          %input(type="submit" value="#{__('common.save')}")
+            %input(type="submit" value="#{__('common.save')}")
 
-    -if event.Teams|length > 0
-      %h3 #{__('wrapup.section.teams')}
-      %section.teams.full
-        -for team in event.Teams
-          #{widgets.team(false, batch, event, team)}
+      -if event.Teams|length > 0
+        %h3 #{__('wrapup.section.teams')}
+        %section.teams.full
+          -for team in event.Teams
+            #{widgets.team(false, batch, event, team)}
 
-    -if event.Photos|length > 0
-      %h3 #{__('wrapup.section.photos')}
-      %section.photos
-        -for photo in event.Photos
-          #{widgets.photo(false, event.batch, event, photo)}
+      -if event.Photos|length > 0
+        %h3 #{__('wrapup.section.photos')}
+        %section.photos
+          -for photo in event.Photos
+            #{widgets.photo(false, event.batch, event, photo)}
 
 
   %link(rel="stylesheet" href="/assets/js/justifiedGallery.min.css")
