@@ -8,11 +8,20 @@
   #{__('common.nav.wrapup')}
 -block og
   %meta(property="og:type" content="website")
+  %meta(name="twitter:card" content="summary_large_image")
+
   %meta(property="og:title" content="CodeDay #{event.Name} #{event.Batch.Name}")
-  %meta(property="og:description" content="#{event.Post ?? __('wrapup.description.generic', {date: event.StartsAt.format('F j-')~event.EndsAt.format('j, Y'), venue: event.VenueName})}")
+  %meta(name="twitter:title" content="CodeDay #{event.Name} #{event.Batch.Name}")
+
+  -set description="#{event.Post ?? __('wrapup.description.generic', {city: event.Name, date: event.StartsAt.format('F j-')~event.EndsAt.format('j, Y'), venue: event.VenueName})}"
+  %meta(property="og:description" content="#{description}")
+  %meta(name="twitter:description" content="#{description}")
+
   -if event.Photos|length > 0
     -for photo in event.PhotosRandom|slice(0,10)
       %meta(property="og:image" content="#{photo.UrlMedium}")
+    -for photo in event.PhotosRandom|slice(0,1)
+      %meta(name="twitter:image" content="#{photo.UrlMedium}")
 
 -block content
   -if event.Teams|length == 0 and event.Photos|length == 0

@@ -12,9 +12,13 @@
 
     %meta(property="og:url" content="#{url}")
     %meta(property="fb:app_id" content="134222673401073")
+    %meta(name="twitter:site" content="@studentrnd")
+    %meta(name="twitter:creator" content="@studentrnd")
     -block og
       %meta(property="og:type" content="website")
+      %meta(name="twitter:card" content="summary")
       %meta(property="og:title" content="#{title}")
+      %meta(name="twitter:title" content="#{title}")
 
   %body(class="section-#{block('section')|trim} page-#{block('page')|trim}")
 
