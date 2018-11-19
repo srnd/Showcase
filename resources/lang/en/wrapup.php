@@ -11,4 +11,8 @@ return array(
 
     'section.teams'         => "What They Made",
     'section.photos'        => "Photos At The Event",
+    'section.export'        => "Export",
+
+    'export.intro'          => "We can create a ZIP with all the photos from this event. Enter your email address below and we'll send you an email when it's ready.",
+    'export.sent'           => "We're generating your ZIP file and will email you shortly.",
 );

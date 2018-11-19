@@ -3,6 +3,7 @@
 namespace Showcase\Http\Controllers;
 
 use Showcase\Models;
+use Showcase\Services;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -80,6 +81,13 @@ class EventController extends Controller
         $this->event->save();
 
         $request->session()->flash('success', __('common.status.saved'));
+        return redirect()->back();
+    }
+
+    public function PostExport(Request $request)
+    {
+        Services\Photos::CreateZip($this->event, $request->get('email'));
+        $request->session()->flash('success', __('wrapup.export.sent'));
         return redirect()->back();
     }
 }

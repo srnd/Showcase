@@ -2,6 +2,7 @@
 
 namespace Showcase\Services;
 
+use Showcase\Models;
 use Showcase\Exceptions;
 use Showcase\Jobs\QueueableClosure;
 use Symfony\Component\HttpFoundation\File\File;
@@ -70,6 +71,59 @@ class Photos
 
             $onComplete($result);
         }));
+    }
+
+    /**
+     * Creates a zip file of all photos from the event.
+     *
+     * @param Models\Event  $event      The event to save photos from.
+     * @param string        $emailTo    Who to send the zip file to.
+     */
+    public static function CreateZip(Models\Event $event, string $emailTo)
+    {
+        \Queue::push(new QueueableClosure(function() use ($event, $emailTo) {
+            // Make a temporary directory
+            $zipName = tempnam(sys_get_temp_dir(), '').'.zip';
+
+            // Create Zip
+            $zip = new \ZipArchive();
+            $zip->open($zipName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+            // Download photos
+            foreach ($event->Photos as $photo) {
+                $fileName = basename(parse_url($photo->UrlLarge, PHP_URL_PATH));
+                $saveTo = tempnam(sys_get_temp_dir(), '');
+
+                file_put_contents($saveTo, file_get_contents($photo->UrlLarge));
+                $zip->addFile($saveTo, 'general/'.$fileName);
+                unlink($saveTo);
+            }
+
+            // Download teams
+            foreach ($event->Teams as $team) {
+                $fileName = preg_replace('/[^\w-]/', '', $team->Name).'.jpg';
+                $saveTo = tempnam(sys_get_temp_dir(), '');
+
+                file_put_contents($saveTo, file_get_contents($photo->PhotoUrlLarge));
+                $zip->addFile($saveTo, 'teams/'.$fileName);
+                unlink($saveTo);
+            }
+
+            // Save the zip file
+            $zip->close();
+
+            // Upload the zip file
+            $s3 = \Storage::disk('s3');
+            $zipUploadedName = sprintf('export_%s_%s_%s.zip', $event->Id, rand(0,65535), time());
+            $s3->putFileAs(self::Prefix, new File($zipName), $zipUploadedName, 'public');
+            $zipUrl = config('filesystems.disks.s3.url').self::Prefix.$zipUploadedName;
+
+            // Send email
+            \Mail::send('email-archive', ['event' => $event, 'link' => $zipUrl], function ($m) use ($user) {
+                $m->from('team@srnd.org', 'SRND');
+                $m->to($emailTo, $emailTo)->subject('Showcase Export for CodeDay '.$event->Name);
+            });
+        });
     }
 
     /**

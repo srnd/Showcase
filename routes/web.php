@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 
     \Route::get('/presentations',           'EventController@GetPresentations') ->name('event.presentations');
     \Route::get('/wrapup',                  'EventController@GetWrapup')        ->name('event.wrapup');
+    \Route::post('/wrapup/export',          'EventController@PostExport')       ->name('event.wrapup.export');
 
     \Route::middleware('edit')->group(function() {
         \Route::post('/presentations/shuffle',  'EventController@PostShuffle')  ->name('event.presentations.shuffle');

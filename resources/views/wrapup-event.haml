@@ -18,7 +18,7 @@
   %meta(name="twitter:description" content="#{description}")
 
   -if event.Photos|length > 0
-    -for photo in event.PhotosRandom|slice(0,10)
+    -for photo in event.PhotosRandom|slice(0,5)
       %meta(property="og:image" content="#{photo.UrlMedium}")
     -for photo in event.PhotosRandom|slice(0,1)
       %meta(name="twitter:image" content="#{photo.UrlMedium}")
@@ -70,6 +70,15 @@
         %section.photos
           -for photo in event.Photos
             #{widgets.photo(false, event.batch, event, photo)}
+
+      -if event.Photos|length > 0 or event.Teams|length > 0
+        %h3 #{__('wrapup.section.export')}
+        %section.export
+          %p #{__('wrapup.export.intro')}
+          %form(method="post" action="#{route('event.wrapup.export'), {'batch': batch, 'event': event}}")
+            #{csrf_field()}
+            %input(type="email" name="email" placeholder="#{__('common.email')}" required=true)
+            %input(type="submit" value="#{__('common.send')}")
 
 
   %link(rel="stylesheet" href="/assets/js/justifiedGallery.min.css")

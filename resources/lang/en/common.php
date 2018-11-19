@@ -21,9 +21,11 @@ return array(
     'type.other'                => "Other",
 
     'save'                      => "Save",
+    'send'                      => "Send",
     'delete'                    => "x",
     'create'                    => "Create New",
     'more'                      => "See More",
+    'email'                     => "Email Address",
 
     'status.saved'              => "Saved!",
     'status.upload-processing'  => "Photo upload is processing. Check back in a few minutes.",
