@@ -87,10 +87,12 @@ class Photos
 
             // Create Zip
             $zip = new \ZipArchive();
-            $zip->open($zipName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+            $zip->open($zipName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
 
             // Download photos
             foreach ($event->Photos as $photo) {
+                if (!$photo->UrlLarge) continue;
+
                 $fileName = basename(parse_url($photo->UrlLarge, PHP_URL_PATH));
                 $saveTo = tempnam(sys_get_temp_dir(), '');
 
@@ -101,6 +103,8 @@ class Photos
 
             // Download teams
             foreach ($event->Teams as $team) {
+                if (!$photo->PhotoUrlLarge) continue;
+
                 $fileName = preg_replace('/[^\w-]/', '', $team->Name).'.jpg';
                 $saveTo = tempnam(sys_get_temp_dir(), '');
 
