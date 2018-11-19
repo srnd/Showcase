@@ -94,40 +94,35 @@ class Photos
                 if (!$photo->UrlLarge) continue;
 
                 $fileName = basename(parse_url($photo->UrlLarge, PHP_URL_PATH));
-                $saveTo = tempnam(sys_get_temp_dir(), '');
-
-                file_put_contents($saveTo, file_get_contents($photo->UrlLarge));
-                $zip->addFile($saveTo, 'general/'.$fileName);
-                unlink($saveTo);
+                $zip->addFile('general/'.$fileName, file_get_contents($photo->UrlLarge));
             }
 
             // Download teams
             foreach ($event->Teams as $team) {
-                if (!$photo->PhotoUrlLarge) continue;
+                if (!$team->PhotoUrlLarge) continue;
 
                 $fileName = preg_replace('/[^\w-]/', '', $team->Name).'.jpg';
-                $saveTo = tempnam(sys_get_temp_dir(), '');
-
-                file_put_contents($saveTo, file_get_contents($photo->PhotoUrlLarge));
-                $zip->addFile($saveTo, 'teams/'.$fileName);
-                unlink($saveTo);
+                $zip->addFromString('teams/'.$fileName, file_get_contents($team->PhotoUrlLarge));
             }
 
             // Save the zip file
             $zip->close();
 
             // Upload the zip file
-            $s3 = \Storage::disk('s3');
             $zipUploadedName = sprintf('export_%s_%s_%s.zip', $event->Id, rand(0,65535), time());
-            $s3->putFileAs(self::Prefix, new File($zipName), $zipUploadedName, 'public');
             $zipUrl = config('filesystems.disks.s3.url').self::Prefix.$zipUploadedName;
 
+            $s3 = \Storage::disk('s3');
+            $s3->putFileAs(self::Prefix, new File($zipName), $zipUploadedName, 'public');
+            unlink($zipName);
+
+
             // Send email
-            \Mail::send('email-archive', ['event' => $event, 'link' => $zipUrl], function ($m) use ($user) {
+            \Mail::send('email-archive', ['event' => $event, 'link' => $zipUrl], function ($m) use ($event, $emailTo) {
                 $m->from('team@srnd.org', 'SRND');
                 $m->to($emailTo, $emailTo)->subject('Showcase Export for CodeDay '.$event->Name);
             });
-        });
+        }));
     }
 
     /**
