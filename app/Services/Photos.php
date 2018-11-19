@@ -94,7 +94,7 @@ class Photos
                 if (!$photo->UrlLarge) continue;
 
                 $fileName = basename(parse_url($photo->UrlLarge, PHP_URL_PATH));
-                $zip->addFile('general/'.$fileName, file_get_contents($photo->UrlLarge));
+                $zip->addFromString('general/'.$fileName, file_get_contents($photo->UrlLarge));
             }
 
             // Download teams

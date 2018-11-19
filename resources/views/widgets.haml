@@ -42,7 +42,7 @@
         %p.description #{team.Description}
 
 -macro photo(can_edit, batch, event, photo)
-  %a(href="#{photo.Url}" target="_blank" class="widget-photo")
+  %a(href="#{photo.UrlLarge}" target="_blank" class="widget-photo")
     %img(src="#{photo.UrlMedium}")
     -if can_edit
       %form(class="delete" method="post" action="#{route('photo.destroy', {'batch': batch, 'event': event, 'photo': photo})}")
