@@ -35,7 +35,7 @@ class Photos
         {
             $file = new File($filePath);
             set_time_limit(120);
-            $s3 = \Storage::disk('s3');
+            $fs = \Storage::disk('s3');
             $ext = $file->guessExtension();
             if ($ext === 'jpeg') $ext = 'jpg';
 
@@ -51,10 +51,10 @@ class Photos
                 array_walk($resizedNames, function (&$v, $k) use($baseName) {
                     $v = sprintf("%s_%s.%s", $baseName, $k, 'jpg');
                 });
-            } while($s3->exists(self::Prefix.$oName));
+            } while($fs->exists(self::Prefix.$oName));
 
             // Upload the original
-            $s3->putFileAs(self::Prefix, $file, $oName, 'public');
+            $fs->putFileAs(self::Prefix, $file, $oName, 'public');
             unlink($filePath);
 
             // Create resized photos and save them to s3
@@ -112,8 +112,8 @@ class Photos
             $zipUploadedName = sprintf('export_%s_%s_%s.zip', $event->Id, rand(0,65535), time());
             $zipUrl = config('filesystems.disks.s3.url').self::Prefix.$zipUploadedName;
 
-            $s3 = \Storage::disk('s3');
-            $s3->putFileAs(self::Prefix, new File($zipName), $zipUploadedName, 'public');
+            $fs = \Storage::disk('s3');
+            $fs->putFileAs(self::Prefix, new File($zipName), $zipUploadedName, 'public');
             unlink($zipName);
 
 
@@ -153,12 +153,12 @@ class Photos
      */
     public static function Resize(string $src, string $dst, int $longEdge)
     {
-        $s3 = \Storage::disk('s3');
+        $fs = \Storage::disk('gcs');
         $kraken = new \Kraken(config('kraken.key'), config('kraken.secret'));
 
         // TODO(@tylermenezes): Check for errors and convert to exceptions
         $kraken->url([
-            'url'           => $s3->url($src),
+            'url'           => $fs->url($src),
             'lossy'         => true,
             'wait'          => true,
             'format'        => 'jpeg',

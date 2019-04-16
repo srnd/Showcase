@@ -24,7 +24,8 @@
         "pion/laravel-chunk-upload": "^1.1",
         "predis/predis": "^1.1",
         "rcrowe/twigbridge": "*",
-        "studentrnd/s5laravel": "1.2.*"
+        "studentrnd/s5laravel": "1.2.*",
+        "websight/l5-google-cloud-storage": "^2.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

@@ -6,7 +6,7 @@
 -block header
   %header
     .img(style="background-image: url(#{photo.UrlLarge});")
-    .caption CodeDay #{photo.Event.Name} #{photo.Event.Batch.Name}
+      .caption #{photo.Event.Batch.EventName} #{photo.Event.Name} #{photo.Event.Batch.Name}
     %h2 #{__('index.title')}
 -block content
   %ul.groupings

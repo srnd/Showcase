@@ -33,6 +33,7 @@ class SyncClearBatches implements ShouldQueue
             $starts->addHours(12);
 
             $batchModel->Name = $batch->name;
+            $batchModel->EventName = 'CodeDay';
             $batchModel->Webname = strtolower(str_replace(' ', '-', $batch->name));
             $batchModel->StartsAt = $starts;
             $batchModel->save();

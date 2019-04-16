@@ -10,8 +10,8 @@
   %meta(property="og:type" content="website")
   %meta(name="twitter:card" content="summary_large_image")
 
-  %meta(property="og:title" content="CodeDay #{event.Name} #{event.Batch.Name}")
-  %meta(name="twitter:title" content="CodeDay #{event.Name} #{event.Batch.Name}")
+  %meta(property="og:title" content="#{event.Batch.EventName} #{event.Name} #{event.Batch.Name}")
+  %meta(name="twitter:title" content="#{event.Batch.EventName} #{event.Name} #{event.Batch.Name}")
 
   -set description="#{event.Post ?? __('wrapup.description.generic', {city: event.Name, date: event.StartsAt.format('F j-')~event.EndsAt.format('j, Y'), venue: event.VenueName})}"
   %meta(property="og:description" content="#{description}")
@@ -31,7 +31,7 @@
     %section.event
       %header
         %h2
-          CodeDay #{event.Name} #{event.Batch.Name}
+          #{event.Batch.EventName} #{event.Name} #{event.Batch.Name}
         .hosted
           -if event.VenueName
             #{__('wrapup.hosted', {'name': event.VenueName})}

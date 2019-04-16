@@ -12,7 +12,7 @@
       %article.event
         %header
           %h2
-            %a(href="#{route('event', {'batch': event.batch, 'event': event})}") CodeDay #{event.Name} #{event.Batch.Name}
+            %a(href="#{route('event', {'batch': event.batch, 'event': event})}") #{event.Batch.EventName} #{event.Name} #{event.Batch.Name}
           .hosted
             -if event.VenueName
               #{__('wrapup.hosted', {'name': event.VenueName})}
