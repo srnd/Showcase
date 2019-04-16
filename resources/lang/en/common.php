@@ -7,6 +7,7 @@ return array(
     'nav.ideas'                 => "Ideas",
     'nav.teams'                 => "Teams",
     'nav.presentations'         => "Present",
+    'nav.privacy'               => "Privacy & Cookies",
     'nav.trademarks'            => "Trademarks",
     'nav.conduct'               => "Conduct",
     'nav.login'                 => "Login",
@@ -26,6 +27,8 @@ return array(
     'create'                    => "Create New",
     'more'                      => "See More",
     'email'                     => "Email Address",
+
+    'license'                   => "Photos are licensed for personal use, or for promotional and editorial use by our partners and members of the press.",
 
     'status.saved'              => "Saved!",
     'status.upload-processing'  => "Photo upload is processing. Check back in a few minutes.",
