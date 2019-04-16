@@ -153,7 +153,7 @@ class Photos
      */
     public static function Resize(string $src, string $dst, int $longEdge)
     {
-        $fs = \Storage::disk('gcs');
+        $fs = \Storage::disk('s3');
         $kraken = new \Kraken(config('kraken.key'), config('kraken.secret'));
 
         // TODO(@tylermenezes): Check for errors and convert to exceptions

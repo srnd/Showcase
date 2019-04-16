@@ -64,13 +64,6 @@ return [
             'url' => env('AWS_URL'),
             'base_url' => env('AWS_BASE'),
         ],
-        'gcs' => [
-            'driver' => 'gcs',
-            'credentials' => base_path('.gcp.json'),
-            'project_id' => env('GCS_PROJECT_ID'),
-            'bucket' => env('GCS_BUCKET'),
-            'url' => env('GCS_URL'),
-        ],
 
     ],
 
