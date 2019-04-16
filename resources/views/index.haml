@@ -6,7 +6,7 @@
 -block header
   %header
     .img(style="background-image: url(#{photo.UrlLarge});")
-      .caption #{photo.Event.Batch.EventName} #{photo.Event.Name} #{photo.Event.Batch.Name}
+    .caption #{photo.Event.Batch.EventName} #{photo.Event.Name} #{photo.Event.Batch.Name}
     %h2 #{__('index.title')}
 -block content
   %ul.groupings
@@ -31,7 +31,7 @@
         -for batch in all_batches
           -if batch.Events|length > 0 and not batch.IsFuture
             %li
-              %a.batch(href="#{route('batch', {'batch': batch})}") #{batch.Name}
+              %a.batch(href="#{route('batch', {'batch': batch})}") #{batch.EventName} #{batch.Name}
 
     %li.regions
       %h2 #{__('index.by-region')}
