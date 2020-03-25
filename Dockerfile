@@ -14,3 +14,4 @@ RUN mkdir -p /app/storage /app/storage/logs /app/storage/framework /app/boostrap
     && chown -R www-data /app/storage \
     && chown -R www-data /app/bootstrap
 
+CMD /app/docker/docker-entrypoint.sh
